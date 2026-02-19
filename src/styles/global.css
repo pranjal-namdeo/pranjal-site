@@ -1,0 +1,236 @@
+@import "tailwindcss";
+
+/* Dark Nebula */
+:root {
+  --bg: 9 9 14;
+  --fg: 232 232 240;
+  --muted: 150 150 170;
+  --card: 20 20 32;
+  --border: 70 70 100;
+
+  --purple: 140 110 255;
+  --indigo: 90 70 220;
+  --font-sans: "Sora", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: var(--font-sans);
+  line-height: 1.45;
+  background:
+    radial-gradient(900px 600px at 15% 10%, rgb(var(--purple) / 0.15), transparent 60%),
+    radial-gradient(1000px 700px at 80% 20%, rgb(var(--indigo) / 0.18), transparent 60%),
+    linear-gradient(180deg, rgba(9,9,14,1) 0%, rgba(6,6,10,1) 100%);
+  color: rgb(var(--fg));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at 50% 20%, black 0%, transparent 70%);
+  opacity: 0.35;
+}
+
+.container {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero-wrap {
+  padding-top: clamp(3rem, 8vw, 6rem);
+  padding-bottom: clamp(3rem, 8vw, 6rem);
+}
+
+.card {
+  background: rgb(var(--card) / 0.6);
+  border: 1px solid rgb(var(--border) / 0.3);
+  border-radius: 20px;
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.02),
+    0 15px 40px rgba(0,0,0,0.4);
+}
+
+.hero {
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.hero-subtitle {
+  max-width: 52ch;
+  margin-top: 0.95rem;
+  margin-bottom: 0;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.4rem;
+}
+
+.glow {
+  box-shadow: 0 0 50px rgb(var(--purple) / 0.15);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 14px;
+  border: 1px solid rgb(var(--border) / 0.4);
+  background: rgba(255,255,255,0.03);
+  font-weight: 500;
+  color: rgb(var(--fg));
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  border-color: rgb(var(--purple) / 0.5);
+  box-shadow: 0 0 25px rgb(var(--purple) / 0.15);
+}
+
+.tag {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--border) / 0.35);
+  background: rgba(255,255,255,0.03);
+  color: rgb(var(--fg) / 0.9);
+}
+
+.muted {
+  color: rgb(var(--muted));
+}
+
+.markdown {
+  color: rgb(var(--fg) / 0.95);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.markdown > :first-child {
+  margin-top: 0;
+}
+
+.markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.65rem;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.markdown h1 {
+  font-size: clamp(1.6rem, 4vw, 2rem);
+}
+
+.markdown h2 {
+  font-size: clamp(1.35rem, 3.2vw, 1.65rem);
+}
+
+.markdown h3 {
+  font-size: clamp(1.15rem, 2.6vw, 1.3rem);
+}
+
+.markdown p {
+  margin: 0.95rem 0;
+}
+
+.markdown ul,
+.markdown ol {
+  margin: 0.95rem 0 0.95rem 1.25rem;
+  padding: 0;
+}
+
+.markdown ul {
+  list-style: disc;
+}
+
+.markdown ol {
+  list-style: decimal;
+}
+
+.markdown li + li {
+  margin-top: 0.45rem;
+}
+
+.markdown a {
+  color: rgb(var(--purple));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.markdown code {
+  padding: 0.1rem 0.35rem;
+  border: 1px solid rgb(var(--border) / 0.45);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.92em;
+}
+
+.markdown pre {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgb(var(--border) / 0.4);
+  border-radius: 12px;
+  background: rgb(8 8 14 / 0.75);
+  overflow-x: auto;
+}
+
+.markdown pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.markdown blockquote {
+  margin: 1rem 0;
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 3px solid rgb(var(--purple) / 0.5);
+  color: rgb(var(--muted));
+}
+
+.markdown hr {
+  margin: 1.5rem 0;
+  border: 0;
+  border-top: 1px solid rgb(var(--border) / 0.35);
+}

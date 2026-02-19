@@ -1,0 +1,25 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts
+    .filter(p => !p.data.draft)
+    .map(p => ({ params: { slug: p.slug }, props: { p } }));
+}
+
+const { p } = Astro.props;
+const { Content } = await p.render();
+---
+
+<Layout>
+  <main class="container" style="padding: 3rem 0;">
+    <a class="muted" href="/blog/">← Back to Blog</a>
+    <h1 style="margin-top: 1rem;">{p.data.title}</h1>
+    {p.data.description && <p class="muted">{p.data.description}</p>}
+    <article class="card markdown" style="padding: 1.5rem; margin-top: 1.5rem;">
+      <Content />
+    </article>
+  </main>
+</Layout>

@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects
+    .filter((p) => !p.data.draft)
+    .map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+
+const { p } = Astro.props;
+const { Content } = await p.render();
+---
+
+<Layout>
+  <main class="container" style="padding: 3rem 0;">
+    <a class="muted" href="/projects/">← Back to Projects</a>
+    <h1 style="margin-top: 1rem;">{p.data.title}</h1>
+    <p class="muted">{p.data.summary}</p>
+    <p class="muted" style="margin-top:.35rem;">{p.data.status} • {p.data.level}</p>
+    {p.data.stack.length > 0 && (
+      <p class="muted" style="margin-top:.35rem;">{p.data.stack.join(" • ")}</p>
+    )}
+
+    <div class="hero-actions" style="margin-top: 1rem;">
+      {p.data.repo && (
+        <a class="btn" href={p.data.repo} target="_blank" rel="noopener noreferrer">Repository</a>
+      )}
+      {p.data.demo && (
+        <a class="btn" href={p.data.demo} target="_blank" rel="noopener noreferrer">Live Demo</a>
+      )}
+    </div>
+
+    <article class="card markdown" style="padding: 1.5rem; margin-top: 1.5rem;">
+      <Content />
+    </article>
+  </main>
+</Layout>

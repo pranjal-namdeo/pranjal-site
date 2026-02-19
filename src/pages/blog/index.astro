@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout>
+  <main class="container" style="padding: 3rem 0;">
+    <h1>Blog</h1>
+    <p class="muted">Bugfix diaries, best practices, and build logs.</p>
+
+    <div style="display:grid; gap: 1rem; margin-top: 1.5rem;">
+      {posts.map((p) => (
+        <a class="card" style="padding: 1.25rem; text-decoration:none; color:inherit;" href={`/blog/${p.slug}/`}>
+          <h2 style="margin:0;">{p.data.title}</h2>
+          <p class="muted" style="margin:.5rem 0 0;">{p.data.description}</p>
+          <p class="muted" style="margin:.75rem 0 0; font-size:.9rem;">
+            {p.data.type} • {p.data.pubDate.toDateString()}
+          </p>
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>

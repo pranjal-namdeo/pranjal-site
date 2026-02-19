@@ -1,0 +1,26 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const notes = await getCollection("learning");
+  return notes
+    .filter(n => !n.data.draft)
+    .map(n => ({ params: { slug: n.slug }, props: { n } }));
+}
+
+const { n } = Astro.props;
+const { Content } = await n.render();
+---
+
+<Layout>
+  <main class="container" style="padding: 3rem 0;">
+    <a class="muted" href="/learning/">← Back to Learning</a>
+    <h1 style="margin-top: 1rem;">{n.data.title}</h1>
+    <p class="muted">{n.data.course}{n.data.module ? ` • ${n.data.module}` : ""}</p>
+
+    <article class="card markdown" style="padding: 1.5rem; margin-top: 1.5rem;">
+      <Content />
+    </article>
+  </main>
+</Layout>

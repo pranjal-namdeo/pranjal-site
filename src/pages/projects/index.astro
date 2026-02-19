@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<Layout>
+  <main class="container" style="padding: 3rem 0;">
+    <h1>Projects</h1>
+    <p class="muted">Builds, experiments, and in-progress work.</p>
+
+    <div style="display:grid; gap: 1rem; margin-top: 1.5rem;">
+      {projects.map((p) => (
+        <a class="card" style="padding: 1.25rem; text-decoration:none; color:inherit;" href={`/projects/${p.slug}/`}>
+          <h2 style="margin:0;">{p.data.title}</h2>
+          <p class="muted" style="margin:.5rem 0 0;">{p.data.summary}</p>
+          <p class="muted" style="margin:.75rem 0 0; font-size:.9rem;">
+            {p.data.status} • {p.data.level}
+          </p>
+          {p.data.stack.length > 0 && (
+            <p class="muted" style="margin:.5rem 0 0; font-size:.9rem;">
+              {p.data.stack.join(" • ")}
+            </p>
+          )}
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>

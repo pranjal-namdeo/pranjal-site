@@ -1,0 +1,26 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const notes = (await getCollection("learning"))
+  .filter(n => !n.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout>
+  <main class="container" style="padding: 3rem 0;">
+    <h1>Learning Notes</h1>
+    <p class="muted">Structured notes from CVIP + other topics.</p>
+
+    <div style="display:grid; gap: 1rem; margin-top: 1.5rem;">
+      {notes.map((n) => (
+        <a class="card" style="padding: 1.25rem; text-decoration:none; color:inherit;" href={`/learning/${n.slug}/`}>
+          <h2 style="margin:0;">{n.data.title}</h2>
+          <p class="muted" style="margin:.5rem 0 0;">
+            {n.data.course}{n.data.module ? ` • ${n.data.module}` : ""}
+          </p>
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>
