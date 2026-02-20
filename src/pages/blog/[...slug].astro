@@ -15,7 +15,9 @@ const { Content } = await p.render();
 
 <Layout>
   <main class="container" style="padding: 3rem 0;">
-    <a class="muted" href="/blog/">← Back to Blog</a>
+    <p class="muted" style="margin:0;">
+      <a class="muted" href="/">Home</a> • <a class="muted" href="/blog/">Back to Blog</a>
+    </p>
     <h1 style="margin-top: 1rem;">{p.data.title}</h1>
     {p.data.description && <p class="muted">{p.data.description}</p>}
     <article class="card markdown" style="padding: 1.5rem; margin-top: 1.5rem;">

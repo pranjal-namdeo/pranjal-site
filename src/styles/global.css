@@ -13,9 +13,18 @@
   --font-sans: "Sora", "Avenir Next", "Segoe UI", sans-serif;
 }
 
+html {
+  min-height: 100%;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--purple) / 0.7) rgb(var(--card) / 0.45);
+}
+
 body {
   margin: 0;
-  min-height: 100%;
+  min-height: 100dvh;
+  overflow-x: hidden;
   font-family: var(--font-sans);
   line-height: 1.45;
   background:
@@ -23,6 +32,26 @@ body {
     radial-gradient(1000px 700px at 80% 20%, rgb(var(--indigo) / 0.18), transparent 60%),
     linear-gradient(180deg, rgba(9,9,14,1) 0%, rgba(6,6,10,1) 100%);
   color: rgb(var(--fg));
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--card) / 0.45);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgb(var(--purple) / 0.85) 0%,
+    rgb(var(--indigo) / 0.85) 100%
+  );
+  background-clip: padding-box;
 }
 
 *,
@@ -48,6 +77,69 @@ body::before {
   max-width: 64rem;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+.page-shell {
+  padding-bottom: 2.5rem;
+}
+
+.site-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: 0.75rem;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  background: rgb(var(--card) / 0.75);
+  backdrop-filter: blur(16px);
+}
+
+.brand-link {
+  color: rgb(var(--fg));
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.site-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.38rem 0.8rem;
+  color: rgb(var(--muted));
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: rgb(var(--fg));
+  border-color: rgb(var(--border) / 0.5);
+  background: rgb(var(--fg) / 0.06);
+}
+
+.nav-link.active {
+  color: rgb(var(--fg));
+  border-color: rgb(var(--purple) / 0.55);
+  background: rgb(var(--purple) / 0.16);
 }
 
 .hero-wrap {

@@ -15,7 +15,9 @@ const { Content } = await n.render();
 
 <Layout>
   <main class="container" style="padding: 3rem 0;">
-    <a class="muted" href="/learning/">← Back to Learning</a>
+    <p class="muted" style="margin:0;">
+      <a class="muted" href="/">Home</a> • <a class="muted" href="/learning/">Back to Learning</a>
+    </p>
     <h1 style="margin-top: 1rem;">{n.data.title}</h1>
     <p class="muted">{n.data.course}{n.data.module ? ` • ${n.data.module}` : ""}</p>
 

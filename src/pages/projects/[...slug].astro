@@ -15,7 +15,9 @@ const { Content } = await p.render();
 
 <Layout>
   <main class="container" style="padding: 3rem 0;">
-    <a class="muted" href="/projects/">← Back to Projects</a>
+    <p class="muted" style="margin:0;">
+      <a class="muted" href="/">Home</a> • <a class="muted" href="/projects/">Back to Projects</a>
+    </p>
     <h1 style="margin-top: 1rem;">{p.data.title}</h1>
     <p class="muted">{p.data.summary}</p>
     <p class="muted" style="margin-top:.35rem;">{p.data.status} • {p.data.level}</p>

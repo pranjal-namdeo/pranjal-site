@@ -1,4 +1,5 @@
 ---
+import { notFound } from "astro:i18n";
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
@@ -10,14 +11,17 @@ const notes = (await getCollection("learning"))
 <Layout>
   <main class="container" style="padding: 3rem 0;">
     <h1>Learning Notes</h1>
-    <p class="muted">Structured notes from CVIP + other topics.</p>
+    <p class="muted">Structured notes from topics I actively learn.</p>
 
     <div style="display:grid; gap: 1rem; margin-top: 1.5rem;">
       {notes.map((n) => (
         <a class="card" style="padding: 1.25rem; text-decoration:none; color:inherit;" href={`/learning/${n.slug}/`}>
           <h2 style="margin:0;">{n.data.title}</h2>
           <p class="muted" style="margin:.5rem 0 0;">
-            {n.data.course}{n.data.module ? ` • ${n.data.module}` : ""}
+            {n.data.course}{n.data.module ? ` • ${n.data.module}` : ""} ~ {n.data.pubDate.toDateString()}
+          </p>
+          <p class="muted" style="margin:.75rem 0 0; font-size:.9rem;">
+            github : {n.data.codeLink}
           </p>
         </a>
       ))}
