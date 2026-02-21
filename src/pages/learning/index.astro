@@ -1,11 +1,13 @@
 ---
-import { notFound } from "astro:i18n";
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
 const notes = (await getCollection("learning"))
   .filter(n => !n.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  .sort((a, b) => {
+    const byDate = b.data.pubDate.valueOf() - a.data.pubDate.valueOf();
+    return byDate !== 0 ? byDate : a.data.title.localeCompare(b.data.title);
+  });
 ---
 
 <Layout>
@@ -15,15 +17,19 @@ const notes = (await getCollection("learning"))
 
     <div style="display:grid; gap: 1rem; margin-top: 1.5rem;">
       {notes.map((n) => (
-        <a class="card" style="padding: 1.25rem; text-decoration:none; color:inherit;" href={`/learning/${n.slug}/`}>
-          <h2 style="margin:0;">{n.data.title}</h2>
+        <article class="card" style="padding: 1.25rem;">
+          <h2 style="margin:0;">
+            <a style="text-decoration:none; color:inherit;" href={`/learning/${n.slug}/`}>{n.data.title}</a>
+          </h2>
           <p class="muted" style="margin:.5rem 0 0;">
             {n.data.course}{n.data.module ? ` • ${n.data.module}` : ""} ~ {n.data.pubDate.toDateString()}
           </p>
-          <p class="muted" style="margin:.75rem 0 0; font-size:.9rem;">
-            github : {n.data.codeLink}
-          </p>
-        </a>
+          {n.data.codeLink && (
+            <p class="muted" style="margin:.75rem 0 0; font-size:.9rem;">
+              GitHub: <a class="inline-link" href={n.data.codeLink} target="_blank" rel="noopener noreferrer">Open notebook/code</a>
+            </p>
+          )}
+        </article>
       ))}
     </div>
   </main>

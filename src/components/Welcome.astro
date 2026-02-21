@@ -1,12 +1,55 @@
+---
+import { getCollection } from "astro:content";
+
+const statusOrder = { shipped: 0, "in-progress": 1, idea: 2 };
+
+const projects = (await getCollection("projects"))
+	.filter((p) => !p.data.draft)
+	.sort((a, b) => {
+		const byStatus = statusOrder[a.data.status] - statusOrder[b.data.status];
+		return byStatus !== 0 ? byStatus : a.data.title.localeCompare(b.data.title);
+	});
+
+const featuredProject = projects[0];
+
+const posts = (await getCollection("blog"))
+	.filter((p) => !p.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const latestBugfix = posts.find((p) => p.data.type === "bugfix") ?? posts[0];
+---
+
 <section class="container hero-wrap">
 	<div class="card glow hero">
-		<h1 class="hero-title">Pranjal Namdeo</h1>
-		<p class="hero-subtitle muted">AI/ML portfolio + bugfix diary + best practices + Learnings</p>
+		<p class="hero-kicker">AI/ML Engineer in Transition</p>
+		<h1 class="hero-title">I build practical AI/ML systems from real debugging pain.</h1>
+		<p class="hero-subtitle muted">
+			Shipping portfolio projects, documenting bugfixes, and turning hard-won lessons into reusable engineering playbooks.
+		</p>
 
 		<div class="hero-actions">
-			<a class="btn" href="/projects">Projects</a>
-			<a class="btn" href="/blog">Blog</a>
-			<a class="btn" href="/about">About</a>
+			<a class="btn btn-solid" href={featuredProject ? `/projects/${featuredProject.slug}/` : "/projects/"}>
+				{featuredProject ? `Featured Project: ${featuredProject.data.title}` : "Explore Projects"}
+			</a>
+			<a class="btn" href={latestBugfix ? `/blog/${latestBugfix.slug}/` : "/blog/"}>
+				{latestBugfix ? `Latest Bugfix: ${latestBugfix.data.title}` : "Read Latest Bugfix"}
+			</a>
+		</div>
+
+		<div class="hero-snapshot">
+			<p class="hero-snapshot-title">Currently Building</p>
+			<ul class="hero-list">
+				<li>Theta Canvas scalp-analysis pipeline with robust image normalization.</li>
+				<li>Daily bugfix logs with reproducible root-cause + fix notes.</li>
+				<li>A cleaner project storytelling format: problem, approach, outcome, next step.</li>
+			</ul>
+		</div>
+
+		<div class="proof-strip" aria-label="Proof points">
+			<span class="proof-pill">Ex-Goldman Sachs</span>
+			<span class="proof-pill">Python Automation Background</span>
+			<span class="proof-pill">Hands-on AI/ML Builds</span>
+			<span class="proof-pill">Public Bugfix Diary</span>
 		</div>
 
 		<div class="tag-row">
